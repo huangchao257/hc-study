@@ -1,0 +1,43 @@
+
+# DataSource Config
+
+# DataSource Config
+mybatis-flex:
+  datasource:
+    localStudy:
+      url: jdbc:mysql://localhost:3306/study
+      username: root
+      password: root
+    localWork:
+      url: jdbc:mysql://localhost:3306/work
+      username: root
+      password: root
+    zmnTest3:
+      url: jdbc:mysql://test3-db.ds.zmn.cn:7306/biz_serv_work_distribute
+      username: root
+      password: H)DUz9LiSLxf
+    zmnProd:
+      url: jdbc:mysql://order-slave01.mysql.rds.aliyuncs.com:3306/biz_serv_work_distribute
+      username: tmp_readonly
+      password: e6Ec9VM64KgcEu52GjEofG65BQm5Vq1V
+
+#spring:
+#  datasource:
+#    local:
+#      study:
+#        url: jdbc:mysql://localhost:3306/study
+#        username: root
+#        password: root
+#      work:
+#        url: jdbc:mysql://localhost:3306/work
+#        username: root
+#        password: root
+#    zmn:
+#      test3:
+#        url: jdbc:mysql://test3-db.ds.zmn.cn:7306/biz_serv_work_distribute
+#        username: root
+#        password: H)DUz9LiSLxf
+#      prod:
+#        url: jdbc:mysql://order-slave01.mysql.rds.aliyuncs.com:3306/biz_serv_work_distribute
+#        username: tmp_readonly
+#        password: e6Ec9VM64KgcEu52GjEofG65BQm5Vq1V

@@ -1,9 +1,9 @@
 package com.hc.virtualwallet.controller;
 
 import com.hc.virtualwallet.service.VirtualWalletService;
+import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
 
 /**
