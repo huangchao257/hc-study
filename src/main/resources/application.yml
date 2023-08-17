@@ -16,10 +16,7 @@ mybatis-flex:
       url: jdbc:mysql://test3-db.ds.zmn.cn:7306/biz_serv_work_distribute
       username: root
       password: H)DUz9LiSLxf
-    zmnProd:
-      url: jdbc:mysql://order-slave01.mysql.rds.aliyuncs.com:3306/biz_serv_work_distribute
-      username: tmp_readonly
-      password: e6Ec9VM64KgcEu52GjEofG65BQm5Vq1V
+
 
 #spring:
 #  datasource:
