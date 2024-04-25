@@ -13,7 +13,7 @@ import java.util.Date;
  * @author: HuangChao
  * @since: 2023/02/09 13:53
  */
-@Table(value = "conf_distribute_plan", dataSource = "zmnTest3")
+@Table(value = "conf_distribute_plan", dataSource = "zmnProd")
 @Data
 @Accessors(chain = true)
 public class ConfDistributePlan implements Serializable {
