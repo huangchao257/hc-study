@@ -1,6 +1,3 @@
-
-# DataSource Config
-
 # DataSource Config
 mybatis-flex:
   datasource:
@@ -9,6 +6,14 @@ mybatis-flex:
       username: root
       password: root
     localWork:
-      url: jdbc:mysql://localhost:3306/work
+      url: jdbc:mysql://localhost:3306/biz_serv_work_distribute
       username: root
       password: root
+    zmnTest3:
+      url: jdbc:mysql://test3-db.ds.zmn.cn:7306/biz_serv_work_distribute
+      username: root
+      password: H)DUz9LiSLxf
+    zmnProd:
+      url: jdbc:mysql://mysql57.aliyun.zmn.local:3306/biz_serv_work_distribute
+      username: huangchao
+      password: Hc257712
