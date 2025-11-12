@@ -1,5 +1,6 @@
 package com.hc.util;
 
+import com.alibaba.fastjson2.JSON;
 import org.springframework.util.ReflectionUtils;
 
 import java.util.*;
@@ -45,9 +46,9 @@ public class BusUtil {
     /**
      * 描述: 通过反射设置对象指定参数默认值
      *
-     * @param r 赋值对象
-     * @param setterSet 需要赋值的字段set方法名称
-     * @param clazz 需要赋值的类型
+     * @param r           赋值对象
+     * @param setterSet   需要赋值的字段set方法名称
+     * @param clazz       需要赋值的类型
      * @param defaultVale 默认值
      * @author: HuangChao
      * @since: 2023/4/17 11:22
@@ -64,8 +65,8 @@ public class BusUtil {
     /**
      * 描述: 通过反射设置对象指定类型参数默认值
      *
-     * @param r 赋值对象
-     * @param clazz 需要赋值的类型
+     * @param r           赋值对象
+     * @param clazz       需要赋值的类型
      * @param defaultVale 默认值
      * @author: HuangChao
      * @since: 2023/4/17 11:23
@@ -106,4 +107,61 @@ public class BusUtil {
         };
     }
 
+
+    /**
+     * 描述: Java to string 输出转 JSON
+     *
+     * @param javaEntityStr
+     * @return {@link String}
+     * @author: HuangChao
+     * @since: 2025/6/4
+     */
+    public static String javaEntityStrToJsonStr(String javaEntityStr) {
+        // 去除首尾的括号和空格
+        String content = javaEntityStr.trim().replaceAll("[()]", "");
+
+        // 构建 Map 存储键值对
+        Map<String, Object> map = new LinkedHashMap<>();
+
+        // 拆分为键值对
+        for (String pair : content.split(", ")) {
+            if (pair.contains("=")) {
+                String[] entry = pair.split("=", 2); // 避免 value 中含有 '=' 导致错误拆分
+                String key = entry[0];
+                String value = entry.length > 1 ? entry[1] : null;
+
+                // 处理 null、数字、字符串等基础类型
+                Object convertedValue = convertValue(value);
+                map.put(key, convertedValue);
+            }
+        }
+
+        // 使用 fastjson2 转换为 JSON 字符串
+        return JSON.toJSONString(map);
+    }
+
+    /**
+     * 描述: 简单类型转换，将字符串转为对应的基础类型
+     */
+    private static Object convertValue(String value) {
+        if (value == null || "null".equals(value)) {
+            return null;
+        } else if ("true".equalsIgnoreCase(value) || "false".equalsIgnoreCase(value)) {
+            return Boolean.valueOf(value);
+        } else if (value.matches("-?\\d+")) { // 判断是否为整数
+            return Integer.valueOf(value);
+        } else if (value.matches("-?\\d+\\.\\d+")) { // 判断是否为浮点数
+            return Double.valueOf(value);
+        } else {
+            return value; // 保留字符串
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+        String javaEntityStr = "(spId=null, spIds=null, mobile=null, plat=10, type=null, name=null, userMobile=null, userName=null, fullName=null, provinceId=null, cityId=null, countyId=null, provinceIds=null, cityIds=null, countyIds=null, subArea=null, subAreas=null, status=2, timeRange=null, startTime=null, endTime=null, plats=null, cooperationPlatform=null, serviceType=null, useProduct=null, cooperativeBrand=null, certifications=null, spServiceType=null, unionPaySignStatus=null, firstOrgId=null, secondOrgId=null, thirdOrgId=null, subCompanyId=null, subCompanyIdList=null, twoType=null, thirdType=null, property=null, ruleAreaProvinceId=null, ruleAreaCityId=null, ruleAreaCountyId=null, ruleServCategId=null, ruleCategOneId=null, ruleCategTwoId=null, statementCycle=null, bizType=null, checkSpManagerId=null, permitFirstOrgIdList=null, permitSecondOrgIdList=null, permitThirdOrgIdList=null, permitSpIdList=null, permitProvinceIdList=null, permitCityIdList=null, permitCountyIdList=null)";
+        String jsonStr = javaEntityStrToJsonStr(javaEntityStr);
+        System.out.println(jsonStr);
+    }
 }

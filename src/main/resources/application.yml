@@ -1,11 +1,36 @@
+server:
+  port: 7777
+  servlet:
+    context-path: /test
+    session:
+      timeout: 1800
+logging:
+  level:
+    root: INFO
 # DataSource Config
 mybatis-flex:
   datasource:
-    localStudy:
-      url: jdbc:mysql://localhost:3306/study
-      username: root
-      password: root
+#    localStudy:
+#      url: jdbc:mysql://localhost:3306/study
+#      username: root
+#      password: root
     localWork:
-      url: jdbc:mysql://localhost:3306/biz_serv_work_distribute
+      url: jdbc:mysql://192.168.91.7:3306/zmn_pexcel
       username: root
-      password: root
+      password: H)DUz9LiSLxf
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html   # 修改 Swagger UI 路径
+    enabled: true            # 是否启用 Swagger UI
+  api-docs:
+    path: /v3/api-docs       # API 文档 JSON 地址
+    enabled: true
+  group-configs:
+    - group: brand
+      paths-to-match: /brand/**
+      packages-to-scan: com.icoderoad.springdoc.controller
+    - group: admin
+      paths-to-match: /admin/**
+      packages-to-scan: com.icoderoad.springdoc.controller
+  default-flat-param-object: false

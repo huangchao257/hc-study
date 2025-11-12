@@ -8,7 +8,6 @@
     <artifactId>hc-study</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -20,10 +19,10 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <easyexcel.version>3.3.2</easyexcel.version>
-        <mybatis-flex.version>1.5.5</mybatis-flex.version>
         <fastjson2.version>2.0.38</fastjson2.version>
         <mysql.connector.java.version>8.0.33</mysql.connector.java.version>
         <mybatis-spring-boot.version>3.0.2</mybatis-spring-boot.version>
+        <springdoc-openapi-starter-webmvc-ui>2.2.0</springdoc-openapi-starter-webmvc-ui>
     </properties>
 
 
@@ -51,6 +50,12 @@
             <optional>true</optional>
         </dependency>
         <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+            <version>${springdoc-openapi-starter-webmvc-ui}</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
@@ -75,16 +80,14 @@
 
         <dependency>
             <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-            <version>${mybatis-flex.version}</version>
-
-            <!--排除 mybatis-spring 版本-->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.mybatis</groupId>
-                    <artifactId>mybatis-spring</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
+            <version>1.11.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-processor</artifactId>
+            <version>1.11.3</version>
+            <scope>provided</scope>
         </dependency>
 
         <!-- 添加已适配 springboot 3 的 mybatis-spring 依赖-->
@@ -97,6 +100,22 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org</groupId>
+            <artifactId>jaudiotagger</artifactId>
+            <version>2.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-core</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-native-win64</artifactId>
+            <version>2.4.6</version>
         </dependency>
     </dependencies>
 

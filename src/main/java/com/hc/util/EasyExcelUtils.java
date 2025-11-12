@@ -72,6 +72,8 @@ public class EasyExcelUtils<T> {
 
     }
 
+
+
     /**
      * 描述: 获取读取Excel的监听器对象
      * 为了解耦及减少每个数据模型bean都要创建一个监听器的臃肿, 使用泛型指定数据模型类型
@@ -128,6 +130,48 @@ public class EasyExcelUtils<T> {
         };
 
     }
+
+    /**
+     * 描述: 单行处理
+     *
+     * @param function
+     * @param consumer
+     * @return {@link AnalysisEventListener<T>}
+     * @author: HuangChao
+     * @since: 2025/4/10
+     */
+    public static <T, R> AnalysisEventListener<T> getSingleReadListener(Function<T, R> function, Consumer<R> consumer) {
+
+        return new AnalysisEventListener<T>() {
+
+            R data;
+
+
+            /**
+             * 每解析一行数据事件调度中心都会通知到这个方法, 订阅者1
+             * @param data 解析的每行数据
+             * @param context
+             */
+            @Override
+            public void invoke(T data, AnalysisContext context) {
+                R apply = function.apply(data);
+                if (apply != null) {
+                    consumer.accept(apply);
+                }
+            }
+
+            /**
+             * excel文件解析完成后,事件调度中心会通知到该方法, 订阅者2
+             * @param context
+             */
+            @Override
+            public void doAfterAllAnalysed(AnalysisContext context) {
+                consumer.accept(data);
+            }
+        };
+
+    }
+
 
     /**
      * 描述: 获取读取Excel的监听器对象, 不指定阈值, 默认阈值为 2000
