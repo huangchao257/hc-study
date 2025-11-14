@@ -24,7 +24,7 @@ public abstract class YingShiConsts {
      */
     public static final String MSG_TYPE_ALARM = "ys.alarm";
     /**
-     * 人脸检测事件
+     * 人脸检测
      */
     public static final String ALARM_TYPE_FACEDETECTION = "facedetection";
     /**

@@ -45,6 +45,12 @@ public class UserFaceTempEntity {
     @Column(value = "subject")
     private String subject;
 
+    @Column(value = "sp_id")
+    private Integer spId;
+
+    @Column(value = "sp_name")
+    private String spName;
+
     /**
      * 用户人脸信息表
      */

@@ -11,20 +11,20 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
+        <version>3.5.7</version>
     </parent>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <easyexcel.version>3.3.2</easyexcel.version>
-        <fastjson2.version>2.0.38</fastjson2.version>
+        <mybatis-spring-boot.version>3.0.4</mybatis-spring-boot.version>
+        <springdoc-openapi-starter-webmvc-ui>2.8.14</springdoc-openapi-starter-webmvc-ui>
+        <easyexcel.version>4.0.3</easyexcel.version>
+        <fastjson2.version>2.0.60</fastjson2.version>
         <mysql.connector.java.version>8.0.33</mysql.connector.java.version>
-        <mybatis-spring-boot.version>3.0.2</mybatis-spring-boot.version>
-        <springdoc-openapi-starter-webmvc-ui>2.2.0</springdoc-openapi-starter-webmvc-ui>
+        <commons-lang3.version>3.18.0</commons-lang3.version>
+        <mybatis-flex.version>1.11.3</mybatis-flex.version>
+        <poi.version>5.4.0</poi.version>
+        <guava.version>33.5.0-jre</guava.version>
     </properties>
-
 
     <dependencies>
         <dependency>
@@ -49,6 +49,8 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+
+        <!--常用依赖-->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -61,9 +63,21 @@
         </dependency>
 
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>${mysql.connector.java.version}</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
         </dependency>
 
         <dependency>
@@ -79,18 +93,21 @@
         </dependency>
 
         <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
-            <version>1.11.3</version>
-        </dependency>
-        <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-processor</artifactId>
-            <version>1.11.3</version>
-            <scope>provided</scope>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
 
-        <!-- 添加已适配 springboot 3 的 mybatis-spring 依赖-->
+        <!--数据库相关-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.connector.java.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -98,10 +115,18 @@
         </dependency>
 
         <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-spring-boot3-starter</artifactId>
+            <version>${mybatis-flex.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.mybatis-flex</groupId>
+            <artifactId>mybatis-flex-processor</artifactId>
+            <version>${mybatis-flex.version}</version>
+            <scope>provided</scope>
         </dependency>
 
+        <!-- 音频 -->
         <dependency>
             <groupId>org</groupId>
             <artifactId>jaudiotagger</artifactId>
@@ -110,7 +135,7 @@
         <dependency>
             <groupId>ws.schild</groupId>
             <artifactId>jave-core</artifactId>
-            <version>3.3.1</version>
+            <version>3.5.0</version>
         </dependency>
         <dependency>
             <groupId>ws.schild</groupId>

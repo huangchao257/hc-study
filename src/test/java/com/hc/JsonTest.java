@@ -1,8 +1,20 @@
 package com.hc;
 
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 /**
  * 类描述:
@@ -13,6 +25,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Slf4j
 @SpringBootTest
 public class JsonTest {
+    @Resource
+    private RestTemplate restTemplate;
 
     @Test
     void testStrToJsonStr() {
@@ -44,6 +58,56 @@ public class JsonTest {
         jsonArray.append("]");
 
         System.out.println("jsonArray = " + jsonArray);
+    }
+
+
+    @Test
+    void test() throws Exception {
+        String imageUrl = "https://alipicdeco.ys7.com:8089/ezviz/pic/down?url=aHR0cDovL2hpay1hbGljbG91ZC5vc3MtY24taGFuZ3pob3UtaW50ZXJuYWwuYWxpeXVuY3MuY29tLzcvQkE5OTc0OTI5XzFfMjAyNTExMTMxNTMzMjMtQkE5OTc0OTI5LTEtMTAxMjEtMi0xP0V4cGlyZXM9MTc2MzYyNDAxMCZPU1NBY2Nlc3NLZXlJZD1MVEFJNEdHcnExYTlrRndVNEJtR1pkblQmU2lnbmF0dXJlPVBFSXBDQ3FxUEhYQ09EaUFPSWY5WFFZcjV6QSUzRA==&crypt=2&time=2025-11-13T15:33:23&key=9cccdea609408ebac0c43d00e817a50e";
+        try {
+            // 构建目标文件路径
+            String fileName = UUID.randomUUID() + ".jpg"; // 可根据实际格式调整扩展名
+            Path targetPath = Paths.get("file/ys2", fileName);
+
+            // 创建父目录（如果不存在）
+            if (!Files.exists(targetPath.getParent())) {
+                Files.createDirectories(targetPath.getParent());
+            }
+
+                byte[] imageBytes =this.downloadImageWithHttpURLConnection(imageUrl);
+                // 检查数据大小
+                if (imageBytes.length > 1024) {  // 大于1KB才认为有效
+                    Files.write(targetPath, imageBytes);
+                    log.info("图片已成功下载至: {}, 大小: {} bytes", targetPath.toAbsolutePath(), imageBytes.length);
+                } else {
+                    log.warn("下载的图片数据过小 ({}) bytes，可能无效: {}", imageBytes.length, imageUrl);
+                }
+        } catch (Exception e) {
+            log.error("下载图片失败: {}", imageUrl, e);
+        }
+    }
+    private byte[] downloadImageWithHttpURLConnection(String imageUrl) throws IOException {
+        URL url = new URL(imageUrl);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setConnectTimeout(5000);
+        connection.setReadTimeout(10000);
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            try (InputStream inputStream = connection.getInputStream();
+                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+
+                byte[] buffer = new byte[4096];
+                int bytesRead;
+                while ((bytesRead = inputStream.read(buffer)) != -1) {
+                    outputStream.write(buffer, 0, bytesRead);
+                }
+                return outputStream.toByteArray();
+            }
+        } else {
+            throw new IOException("HTTP响应码: " + responseCode);
+        }
     }
 
 }

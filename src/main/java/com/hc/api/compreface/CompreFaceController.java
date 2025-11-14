@@ -67,6 +67,8 @@ public class CompreFaceController {
                 AddFaceDRO test = compreFaceClient.addFace(entity.getUserId().toString(), entity.getAvatarSrc());
                 entity.setSubject(test.getSubject());
                 entity.setFaceId(test.getImage_id());
+                entity.setSpId(Integer.parseInt(data.get(2).toString()));
+                entity.setSpName(data.get(3).toString());
                 return entity;
             } catch (Exception e) {
                 log.error("数据转换异常:{}", JSON.toJSONString(data), e);
@@ -74,7 +76,12 @@ public class CompreFaceController {
             }
         };
 
-        Consumer<UserFaceTempEntity> consumer = entity -> userFaceTempMapper.insert(entity);
+        Consumer<UserFaceTempEntity> consumer = entity -> {
+            if (entity == null) {
+                return;
+            }
+            userFaceTempMapper.insert(entity);
+        };
 
         // 读取excel
         EasyExcel.read(fileName,
